@@ -1,0 +1,19 @@
+image: registry.dev-internal.crmstyle.com/synergy/futuredev/images/docker-openjdk:8
+
+stages:
+  - build
+
+pages:
+  stage: build
+  image: node:13.7-alpine
+  before_script:
+    - npm install -g redoc-cli
+  script:
+    - redoc-cli bundle ./dep/openapi.yaml
+    - mkdir .public
+    - cp -r ./redoc-static.html .public
+    - mv .public public
+  artifacts:
+    paths:
+      - public
+
