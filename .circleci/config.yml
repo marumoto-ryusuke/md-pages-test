@@ -2,14 +2,28 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: node:13.7
+      - image: circleci/node:13.7
     steps:
       - checkout
-      - run: npm install -g redoc-cli
+      - restore_cache:
+          key: dependency-cache-{{ .Branch }}
+      - run:
+          name: install_redoc_cli
+          command: npm install -g redoc-cli
+      - save_cache:
+          key: dependency-cache-{{ .Branch }}
+          paths:
+            - ./node_modules
+      - run: redoc-cli bundle -o database-api-specification ./dep/swagger.yml
       - run: git config --global user.email ${GIT_USER_EMAIL}
       - run: git config --global user.name ${GIT_USER_NAME}
-      - run: git checkout gh-pages
-      - run: redoc-cli bundle ./dep/swagger.yml
       - run: git add -A
-      - run: git commit -m "Add gh-pages"
+      - run: git commit -m "Publish Pages"
       - run: git push origin gh-pages
+workflows:
+  build-and-publish:
+    jobs:
+      - build:
+        filters:
+          branches:
+            only: master
