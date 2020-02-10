@@ -8,8 +8,8 @@ jobs:
       - run: npm install -g redoc-cli
       - run: git config --global user.email ${GIT_USER_EMAIL}
       - run: git config --global user.name ${GIT_USER_NAME}
-      - run: git checkout pages
+      - run: git checkout gh-pages
       - run: redoc-cli bundle ./dep/swagger.yml
       - run: git add -A
-      - run: git commit -m "Add Pages"
-      - run: git push origin pages
+      - run: git commit -m "Add gh-pages"
+      - run: git push origin gh-pages
