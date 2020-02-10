@@ -6,10 +6,10 @@ jobs:
     steps:
       - checkout
       - run: npm install -g redoc-cli
-      - run: redoc-cli bundle ./dep/swagger.yml
       - run: git config --global user.email ${GIT_USER_EMAIL}
       - run: git config --global user.name ${GIT_USER_NAME}
       - run: git checkout pages
+      - run: redoc-cli bundle ./dep/swagger.yml
       - run: git add -A
       - run: git commit -m "Add Pages"
       - run: git push origin pages
