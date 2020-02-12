@@ -35,4 +35,6 @@ publish:
     - git config --global user.name marumoto-ryusuke
   script:
     - git branch
+    - git remote -v
+    - git pull GitHub master
     - git push --set-upstream GitHub master
