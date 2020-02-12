@@ -34,4 +34,5 @@ publish:
     - git config --global user.email hfg.archer@gmail.com
     - git config --global user.name marumoto-ryusuke
   script:
+    - git branch
     - git push --set-upstream origin master
