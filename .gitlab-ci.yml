@@ -20,6 +20,16 @@ pages:
 publish:
   stage: build
   before_script:
+    # SSH用のディレクトリ作成
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    # github.comのSSH host keysを保存する
+    - apt-get update -y && apt-get install openssh-client -y
+    - ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+    # ssh-agentの設定
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    # git のユーザ情報設定
     - git remote set-url --add --push origin git@github.com:marumoto-ryusuke/test_doc.git
     - git config --global user.email hfg.archer@gmail.com
     - git config --global user.name marumoto-ryusuke
