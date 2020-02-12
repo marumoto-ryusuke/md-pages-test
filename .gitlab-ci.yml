@@ -30,9 +30,9 @@ publish:
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
     # git のユーザ情報設定
-    - git remote set-url --add --push origin git@github.com:marumoto-ryusuke/test_doc.git
+    - git remote add GitHub git@github.com:marumoto-ryusuke/test_doc.git
     - git config --global user.email hfg.archer@gmail.com
     - git config --global user.name marumoto-ryusuke
   script:
     - git branch
-    - git push --set-upstream origin master
+    - git push --set-upstream GitHub master
