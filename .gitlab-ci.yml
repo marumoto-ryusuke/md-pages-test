@@ -20,9 +20,8 @@ pages:
 publish:
   stage: build
   before_script:
-    - git remote add github https://github.com/marumoto-ryusuke/test_doc.git
+    - git remote set-url --add --push origin https://github.com/marumoto-ryusuke/test_doc.git
     - git config --global user.email hfg.archer@gmail.com
     - git config --global user.name marumoto-ryusuke
   script:
-    - git commit -m "first commit"
-    - git push github master
+    - git push --set-upstream origin master
