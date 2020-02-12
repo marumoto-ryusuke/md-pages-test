@@ -20,7 +20,7 @@ pages:
 publish:
   stage: build
   before_script:
-    - git remote set-url --add --push origin https://github.com/marumoto-ryusuke/test_doc.git
+    - git remote set-url --add --push origin git@github.com:marumoto-ryusuke/test_doc.git
     - git config --global user.email hfg.archer@gmail.com
     - git config --global user.name marumoto-ryusuke
   script:
