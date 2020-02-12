@@ -37,4 +37,5 @@ publish:
     - git branch
     - git remote -v
     - git pull GitHub master
-    - git push --set-upstream GitHub master:master
+    - git branch
+    - git push -u GitHub master:master
