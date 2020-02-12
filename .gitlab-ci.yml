@@ -17,3 +17,11 @@ pages:
     paths:
       - public
 
+publish:
+  stage: build
+  before_script:
+    - git remote set-url origin https://github.com/marumoto-ryusuke/test_doc.git
+    - git config --global user.email hfg.archer@gmail.com
+    - git config --global user.name marumoto.ryusuke
+  script:
+    - git push origin master
