@@ -24,4 +24,5 @@ publish:
     - git config --global user.email hfg.archer@gmail.com
     - git config --global user.name marumoto-ryusuke
   script:
+    - git commit -m "first commit"
     - git push github master
