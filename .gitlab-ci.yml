@@ -6,9 +6,6 @@ stages:
 
 build:
   stage: build
-  only:
-    changes:
-      - spec/openapi.yaml
   before_script:
     - npm install -g redoc-cli
   script:
