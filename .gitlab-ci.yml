@@ -2,6 +2,7 @@ image: node:13.7
 
 stages:
   - build
+  - publish
 
 build:
   stage: build
@@ -18,7 +19,7 @@ build:
       - ./redoc-static.html
 
 pages:
-  stage: build
+  stage: publish
   script:
     - mkdir .public
     - cp -r ./redoc-static.html .public
@@ -28,7 +29,7 @@ pages:
       - public
 
 to_github:
-  stage: build
+  stage: publish
   before_script:
     # SSH 設定
     - mkdir -p ~/.ssh
