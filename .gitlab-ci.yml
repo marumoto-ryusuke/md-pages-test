@@ -1,11 +1,11 @@
-image: registry.dev-internal.crmstyle.com/synergy/futuredev/images/docker-openjdk:8
+image: node:13.7
 
 stages:
   - build
+  - publish
 
-pages:
+build:
   stage: build
-  image: node:13.7-alpine
   before_script:
     - npm install -g redoc-cli
   script:
@@ -17,25 +17,27 @@ pages:
     paths:
       - public
 
-publish:
-  stage: build
+to_github:
+  stage: publish
   before_script:
-    # SSH用のディレクトリ作成
+    # SSH 設定
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    # github.comのSSH host keysを保存する
     - apt-get update -y && apt-get install openssh-client -y
     - ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-    # ssh-agentの設定
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-    # git のユーザ情報設定
-    - git remote add GitHub git@github.com:marumoto-ryusuke/test_doc.git
-    - git config --global user.email hfg.archer@gmail.com
-    - git config --global user.name marumoto-ryusuke
+    # git ユーザー設定
+    - git config --global user.email "hfg.archer@gmail.com"
+    - git config --global user.name "marumoto.ryusuke"
   script:
-    - git branch
-    - git remote -v
-    - git pull GitHub master
-    - git branch -a
-    - git push -u GitHub master:master
+    - rm -rf github_repo
+    - git clone git@github.com:marumoto-ryusuke/docs.git github_repo
+    - cd github_repo
+    - cp ../redoc-static.html .
+    - git add -A .
+    - |-
+      if [ `git status -s | wc -l` -gt 0 ]; then
+        git commit -m "Update Redoc Static Page"
+        git push origin master
+      fi
