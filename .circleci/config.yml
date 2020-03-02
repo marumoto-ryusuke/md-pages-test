@@ -14,9 +14,10 @@ jobs:
           key: dependency-cache-{{ .Branch }}
           paths:
             - ./node_modules
-      - run: redoc-cli bundle -o database-api-specification ./dep/swagger.yml
+      - run: redoc-cli bundle -o database-api-specification.html ./spec/openapi.yaml
       - run: git config --global user.email ${GIT_USER_EMAIL}
       - run: git config --global user.name ${GIT_USER_NAME}
+      - run: git checkout gh-pages
       - run: git add -A
       - run: git commit -m "Publish Pages"
       - run: git push origin gh-pages
