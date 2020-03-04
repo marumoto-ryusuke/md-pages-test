@@ -59,6 +59,9 @@ paths:
       operationId: showPetById
       tags:
         - pets
+      externalDocs:
+        description: gitlab
+        url: ./docs/docs-test
       parameters:
         - name: petId
           in: path
