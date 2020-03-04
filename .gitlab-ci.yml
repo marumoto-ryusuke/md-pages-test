@@ -9,7 +9,7 @@ build:
   before_script:
     - npm install -g redoc-cli
   script:
-    - redoc-cli bundle -o database-api-specification ./dep/swagger.yml
+    - redoc-cli bundle ./dep/swagger.yml
     - mkdir .public
     - cp -r ./redoc-static.html .public
     - mv .public public
@@ -17,27 +17,27 @@ build:
     paths:
       - public
 
-to_github:
-  stage: publish
-  before_script:
-    # SSH 設定
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - apt-get update -y && apt-get install openssh-client -y
-    - ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-    # git ユーザー設定
-    - git config --global user.email "hfg.archer@gmail.com"
-    - git config --global user.name "marumoto.ryusuke"
-  script:
-    - rm -rf github_repo
-    - git clone git@github.com:marumoto-ryusuke/docs.git github_repo
-    - cd github_repo
-    - cp ../redoc-static.html .
-    - git add -A .
-    - |-
-      if [ `git status -s | wc -l` -gt 0 ]; then
-        git commit -m "Update Redoc Static Page"
-        git push origin master
-      fi
+# to_github:
+#   stage: publish
+#   before_script:
+#     # SSH 設定
+#     - mkdir -p ~/.ssh
+#     - chmod 700 ~/.ssh
+#     - apt-get update -y && apt-get install openssh-client -y
+#     - ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+#     - eval $(ssh-agent -s)
+#     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+#     # git ユーザー設定
+#     - git config --global user.email "hfg.archer@gmail.com"
+#     - git config --global user.name "marumoto.ryusuke"
+#   script:
+#     - rm -rf github_repo
+#     - git clone git@github.com:marumoto-ryusuke/docs.git github_repo
+#     - cd github_repo
+#     - cp ../redoc-static.html .
+#     - git add -A .
+#     - |-
+#       if [ `git status -s | wc -l` -gt 0 ]; then
+#         git commit -m "Update Redoc Static Page"
+#         git push origin master
+#       fi
