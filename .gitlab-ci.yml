@@ -17,6 +17,16 @@ build:
     paths:
       - public
 
+pages:
+  stage: publish
+  image: ruby:2.6
+  script:
+    - bundle install
+    - bundle exec jekyll build -d public
+  artifacts:
+    paths:
+      - public
+
 # to_github:
 #   stage: publish
 #   before_script:
